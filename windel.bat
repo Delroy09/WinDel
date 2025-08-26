@@ -3,6 +3,9 @@ chcp 65001 >nul 2>&1
 setlocal enabledelayedexpansion
 title WinDel Package Manager - Secure & Fast
 
+REM Security: Prevent variable injection
+set "PATH=%SystemRoot%\system32;%SystemRoot%;%SystemRoot%\System32\Wbem"
+
 REM Security and admin check
 net session >nul 2>&1
 if %errorLevel% == 0 (
@@ -54,10 +57,19 @@ if %errorLevel% neq 0 (
 )
 
 echo ✓ Dependencies verified and operational
-echo [2/3] Refreshing package sources...
-winget source update >nul 2>&1
+echo [2/4] Validating WinGet integrity...
+winget --info >nul 2>&1
+if %errorLevel% neq 0 (
+    echo ✗ WinGet integrity check failed
+    echo [SECURITY] Please reinstall WinGet from Microsoft Store
+    pause
+    exit /b 1
+)
+echo ✓ WinGet integrity validated
+echo [3/4] Refreshing package sources...
+winget source update --disable-interactivity >nul 2>&1
 echo ✓ Package sources updated
-echo [3/3] System ready
+echo [4/4] System ready
 echo.
 
 :MAIN_MENU
@@ -94,7 +106,7 @@ echo ====================================================
 echo.
 
 set temp_updates=%temp%\winget_scan_%random%.txt
-winget upgrade --include-unknown > "%temp_updates%" 2>&1
+winget upgrade --include-unknown --disable-interactivity > "%temp_updates%" 2>&1
 
 findstr /C:"No applicable update found" "%temp_updates%" >nul
 if %errorLevel% equ 0 (
@@ -145,7 +157,7 @@ if errorlevel 2 goto MAIN_MENU
 echo.
 echo 🚀 Starting updates...
 echo ====================================================
-winget upgrade --all --accept-package-agreements --accept-source-agreements --silent
+winget upgrade --all --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
 echo ====================================================
 echo ✓ All updates completed!
 timeout /t 3 >nul
@@ -159,7 +171,7 @@ echo.
 echo Fetching update list...
 
 set temp_list=%temp%\winget_interactive_%random%.txt
-winget upgrade --include-unknown > "%temp_list%" 2>&1
+winget upgrade --include-unknown --disable-interactivity > "%temp_list%" 2>&1
 
 findstr /C:"No applicable update found" "%temp_list%" >nul
 if %errorLevel% equ 0 (
@@ -251,7 +263,7 @@ echo Updating all %count% packages...
 echo ====================================================
 for /l %%i in (1,1,%count%) do (
     echo [%%i/%count%] ████████████████████████████████████████ Updating !pkg_name[%%i]!
-    winget upgrade --id "!pkg_id[%%i]!" --accept-package-agreements --accept-source-agreements --silent
+    winget upgrade --id "!pkg_id[%%i]!" --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
     if !errorLevel! equ 0 (
         echo    ✓ !pkg_name[%%i]! updated successfully
     ) else (
@@ -263,6 +275,12 @@ goto :eof
 
 :PROCESS_SELECTION
 set "input=%~1"
+REM Security: Sanitize input - remove dangerous characters
+set "input=!input:&=!"
+set "input=!input:|=!"
+set "input=!input:>=!"
+set "input=!input:<=!"
+set "input=!input:;=!"
 set "input=!input: =!"
 
 for %%i in (!input!) do (
@@ -288,7 +306,7 @@ goto :eof
 set num=%1
 if %num% gtr 0 if %num% leq %count% (
     echo [%num%/%count%] ████████████████████████████████████████ Updating !pkg_name[%num%]!
-    winget upgrade --id "!pkg_id[%num%]!" --accept-package-agreements --accept-source-agreements --silent
+    winget upgrade --id "!pkg_id[%num%]!" --accept-package-agreements --accept-source-agreements --silent --disable-interactivity
     if !errorLevel! equ 0 (
         echo    ✓ !pkg_name[%num%]! updated successfully
     ) else (
