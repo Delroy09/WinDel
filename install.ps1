@@ -16,7 +16,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Download latest WinDel script
-$windel_url = "https://raw.githubusercontent.com/yourusername/windel/main/windel.bat"
+$windel_url = "https://raw.githubusercontent.com/Delroy09/WinDel/main/windel.bat"
 Write-Host "📥 Downloading latest WinDel..." -ForegroundColor Green
 
 try {

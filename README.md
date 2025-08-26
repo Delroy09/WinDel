@@ -2,9 +2,9 @@
 
 **Secure, Fast & Simple Windows Package Update Manager**
 
-[![Latest Release](https://img.shields.io/github/v/release/yourusername/windel?style=for-the-badge&logo=github)](https://github.com/yourusername/windel/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/yourusername/windel/total?style=for-the-badge&logo=github)](https://github.com/yourusername/windel/releases)
-[![License](https://img.shields.io/github/license/yourusername/windel?style=for-the-badge)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/Delroy09/WinDel?style=for-the-badge&logo=github)](https://github.com/Delroy09/WinDel/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/Delroy09/WinDel/total?style=for-the-badge&logo=github)](https://github.com/Delroy09/WinDel/releases)
+[![License](https://img.shields.io/github/license/Delroy09/WinDel?style=for-the-badge)](LICENSE)
 
 WinDel is a lightweight, secure Windows package manager that simplifies updating your installed applications using WinGet. Built with security-first principles and enterprise-grade reliability.
 
@@ -13,7 +13,7 @@ WinDel is a lightweight, secure Windows package manager that simplifies updating
 ### One-Line Install (Recommended)
 
 ```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/install.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/install.ps1'))
 ```
 
 ### Alternative Installation Methods
@@ -21,25 +21,25 @@ iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercon
 **System-Wide (Admin Required)**
 
 ```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/install.ps1')) -System
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/install.ps1')) -System
 ```
 
 **Portable (Desktop)**
 
 ```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/install.ps1')) -Portable
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/install.ps1')) -Portable
 ```
 
 **Run Once (No Installation)**
 
 ```powershell
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/windel-remote.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/windel-remote.ps1'))
 ```
 
 **Manual Download**
 
 ```cmd
-curl -o windel.bat https://raw.githubusercontent.com/yourusername/windel/main/windel.bat && windel.bat
+curl -o windel.bat https://raw.githubusercontent.com/Delroy09/WinDel/main/windel.bat && windel.bat
 ```
 
 ## 🎯 Features
@@ -136,7 +136,7 @@ ms-windows-store://pdp/?productid=9NBLGGH4NNS1
 
 ```cmd
 # Use curl instead
-curl -L -o windel.bat https://github.com/yourusername/windel/releases/latest/download/windel.bat
+curl -L -o windel.bat https://github.com/Delroy09/WinDel/releases/latest/download/windel.bat
 ```
 
 ## 🔄 Updates
@@ -145,7 +145,7 @@ WinDel automatically checks for updates to itself. To manually update:
 
 ```powershell
 # Re-run the installer
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/install.ps1'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/install.ps1'))
 ```
 
 ## 📈 Version History
@@ -166,8 +166,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙋‍♂️ Support
 
-- 📋 [Issues](https://github.com/yourusername/windel/issues) - Bug reports and feature requests
-- 💬 [Discussions](https://github.com/yourusername/windel/discussions) - Questions and community
+- 📋 [Issues](https://github.com/Delroy09/WinDel/issues) - Bug reports and feature requests
+- 💬 [Discussions](https://github.com/Delroy09/WinDel/discussions) - Questions and community
 - 📧 [Email](mailto:your-email@example.com) - Direct contact
 
 ## ⭐ Star History

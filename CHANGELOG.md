@@ -128,8 +128,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version Links
 
-- [Latest Release](https://github.com/yourusername/windel/releases/latest)
-- [All Releases](https://github.com/yourusername/windel/releases)
-- [v1.2.0](https://github.com/yourusername/windel/releases/tag/v1.2.0)
-- [v1.1.0](https://github.com/yourusername/windel/releases/tag/v1.1.0)
-- [v1.0.0](https://github.com/yourusername/windel/releases/tag/v1.0.0)
+- [Latest Release](https://github.com/Delroy09/WinDel/releases/latest)
+- [All Releases](https://github.com/Delroy09/WinDel/releases)
+- [v1.2.0](https://github.com/Delroy09/WinDel/releases/tag/v1.2.0)
+- [v1.1.0](https://github.com/Delroy09/WinDel/releases/tag/v1.1.0)
+- [v1.0.0](https://github.com/Delroy09/WinDel/releases/tag/v1.0.0)
