@@ -20,9 +20,11 @@ try {
     Set-Location $temp_dir
     & cmd.exe /c "`"$windel_path`""
     
-} catch {
+}
+catch {
     Write-Host "❌ Error: $($_.Exception.Message)" -ForegroundColor Red
-} finally {
+}
+finally {
     # Cleanup
     Set-Location $env:USERPROFILE
     if (Test-Path $temp_dir) {
