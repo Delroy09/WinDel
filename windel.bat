@@ -29,7 +29,7 @@ echo ██║  ██║██╔══╝  ██║
 echo ██████╔╝███████╗███████╗
 echo ╚═════╝ ╚══════╝╚══════╝
 echo.
-echo        Secure Package Update Manager v1.2.0
+echo        Secure Package Update Manager v1.2.1
 echo ================================================
 echo.
 

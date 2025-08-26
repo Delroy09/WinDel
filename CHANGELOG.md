@@ -19,6 +19,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bug fixes
 
+## [1.2.1] - 2025-08-26
+
+### Added
+
+- 🚀 **One-Line Installation**: PowerShell one-liner installation like popular scripts
+- 📦 **Remote Execution**: Run WinDel without any local installation
+- 🔧 **Multiple Install Options**: Portable, System-wide, Custom path installations
+- 🤖 **Automated Releases**: GitHub Actions automatically create releases on commits
+- 📋 **Professional Documentation**: Comprehensive README with installation methods
+- 🎯 **Installation Scripts**: Dedicated `install.ps1` and `windel-remote.ps1` scripts
+
+### Changed
+
+- 🎨 **Enhanced README**: Professional documentation with badges and installation options
+- 🔄 **Automated Workflows**: GitHub Actions for automatic release management
+- 📊 **Better Release Assets**: Multiple download options for different use cases
+
+### Fixed
+
+- 🐛 **GitHub Integration**: Proper automated release creation and asset uploads
+- 📝 **Documentation**: Comprehensive troubleshooting and usage examples
+
 ## [1.2.0] - 2025-08-26
 
 ### Added

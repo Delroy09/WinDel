@@ -1,0 +1,137 @@
+name: Auto Release on Push
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "windel.bat"
+      - "CHANGELOG.md"
+
+jobs:
+  auto-release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract version from windel.bat
+        id: get_version
+        run: |
+          $content = Get-Content windel.bat
+          $versionLine = $content | Where-Object { $_ -match "Secure Package Update Manager v" }
+          if ($versionLine -match "v([\d\.]+)") {
+            $version = $matches[1]
+            echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+            echo "Found version: $version"
+          } else {
+            echo "VERSION=1.0.0" >> $env:GITHUB_OUTPUT
+            echo "No version found, defaulting to 1.0.0"
+          }
+        shell: powershell
+
+      - name: Check if tag exists
+        id: check_tag
+        run: |
+          $version = "${{ steps.get_version.outputs.VERSION }}"
+          $tagExists = git tag -l "v$version"
+          if ($tagExists) {
+            echo "TAG_EXISTS=true" >> $env:GITHUB_OUTPUT
+            echo "Tag v$version already exists"
+          } else {
+            echo "TAG_EXISTS=false" >> $env:GITHUB_OUTPUT  
+            echo "Tag v$version does not exist"
+          }
+        shell: powershell
+
+      - name: Get commit message
+        id: commit_message
+        run: |
+          $commitMsg = git log -1 --pretty=%B
+          $commitMsg = $commitMsg -replace '"', '\"'
+          echo "COMMIT_MSG=$commitMsg" >> $env:GITHUB_OUTPUT
+        shell: powershell
+
+      - name: Extract changelog for version
+        id: changelog
+        run: |
+          $version = "${{ steps.get_version.outputs.VERSION }}"
+          if (Test-Path "CHANGELOG.md") {
+            $changelog = Get-Content CHANGELOG.md -Raw
+            $pattern = "## \[$version\].*?(?=## \[|\z)"
+            if ($changelog -match $pattern) {
+              $versionChangelog = $matches[0]
+              $versionChangelog = $versionChangelog -replace "## \[$version\][^\r\n]*", ""
+              $versionChangelog = $versionChangelog.Trim()
+              if ($versionChangelog) {
+                $versionChangelog | Out-File -FilePath changelog_extract.md -Encoding utf8
+              } else {
+                "## Changes in v$version`n`n${{ steps.commit_message.outputs.COMMIT_MSG }}" | Out-File -FilePath changelog_extract.md -Encoding utf8
+              }
+            } else {
+              "## Changes in v$version`n`n${{ steps.commit_message.outputs.COMMIT_MSG }}" | Out-File -FilePath changelog_extract.md -Encoding utf8
+            }
+          } else {
+            "## Changes in v$version`n`n${{ steps.commit_message.outputs.COMMIT_MSG }}" | Out-File -FilePath changelog_extract.md -Encoding utf8
+          }
+        shell: powershell
+
+      - name: Create tag
+        if: steps.check_tag.outputs.TAG_EXISTS == 'false'
+        run: |
+          $version = "${{ steps.get_version.outputs.VERSION }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a "v$version" -m "Auto-release v$version"
+          git push origin "v$version"
+        shell: powershell
+
+      - name: Create Release
+        if: steps.check_tag.outputs.TAG_EXISTS == 'false'
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.get_version.outputs.VERSION }}
+          release_name: WinDel Package Manager v${{ steps.get_version.outputs.VERSION }}
+          body_path: changelog_extract.md
+          draft: false
+          prerelease: false
+
+      - name: Upload WinDel Script
+        if: steps.check_tag.outputs.TAG_EXISTS == 'false'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./windel.bat
+          asset_name: windel.bat
+          asset_content_type: application/octet-stream
+
+      - name: Upload Install Script
+        if: steps.check_tag.outputs.TAG_EXISTS == 'false'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./install.ps1
+          asset_name: install.ps1
+          asset_content_type: application/octet-stream
+
+      - name: Upload Remote Script
+        if: steps.check_tag.outputs.TAG_EXISTS == 'false'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./windel-remote.ps1
+          asset_name: windel-remote.ps1
+          asset_content_type: application/octet-stream
