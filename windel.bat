@@ -29,22 +29,33 @@ echo ██║  ██║██╔══╝  ██║
 echo ██████╔╝███████╗███████╗
 echo ╚═════╝ ╚══════╝╚══════╝
 echo.
-echo        Secure Package Update Manager v1.0
+echo        Secure Package Update Manager v1.2.0
 echo ================================================
 echo.
 
 REM Verify dependency installation and security
-echo [1/3] Verifying system dependencies...
+echo [1/4] Verifying system dependencies...
 where winget >nul 2>&1
 if %errorLevel% neq 0 (
-    echo ⚠ WinGet not found - attempting automatic installation...
-    start /wait ms-windows-store://pdp/?productid=9NBLGGH4NNS1
-    timeout /t 5 >nul
-    where winget >nul 2>&1
-    if %errorLevel% neq 0 (
-        echo ✗ Installation failed. Please restart Windows and try again.
-        pause
-        exit /b 1
+    echo ⚠ WinGet not found - checking alternative locations...
+    if exist "%LOCALAPPDATA%\Microsoft\WindowsApps\winget.exe" (
+        set "PATH=%PATH%;%LOCALAPPDATA%\Microsoft\WindowsApps"
+        echo ✓ WinGet found in Windows Apps folder
+    ) else (
+        echo ⚠ WinGet not found - attempting automatic installation...
+        start /wait ms-windows-store://pdp/?productid=9NBLGGH4NNS1
+        timeout /t 10 >nul
+        where winget >nul 2>&1
+        if %errorLevel% neq 0 (
+            if exist "%LOCALAPPDATA%\Microsoft\WindowsApps\winget.exe" (
+                set "PATH=%PATH%;%LOCALAPPDATA%\Microsoft\WindowsApps"
+                echo ✓ WinGet installation completed
+            ) else (
+                echo ✗ Installation failed. Please install WinGet manually and restart.
+                pause
+                exit /b 1
+            )
+        )
     )
 )
 
@@ -76,9 +87,9 @@ echo.
 cls
 net session >nul 2>&1
 if %errorLevel% == 0 (
-    echo [ADMIN] - WinDel Package Manager v1.0
+    echo [ADMIN] - WinDel Package Manager v1.2.0
 ) else (
-    echo [USER]  - WinDel Package Manager v1.0
+    echo [USER]  - WinDel Package Manager v1.2.0
 )
 echo ====================================================
 echo.

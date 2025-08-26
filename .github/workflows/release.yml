@@ -1,0 +1,86 @@
+name: Create Release and Upload Assets
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: get_version
+        run: |
+          $version = $env:GITHUB_REF -replace 'refs/tags/v', ''
+          echo "VERSION=$version" >> $env:GITHUB_OUTPUT
+          echo "TAG_NAME=$env:GITHUB_REF" >> $env:GITHUB_OUTPUT
+        shell: powershell
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          $changelog = Get-Content CHANGELOG.md -Raw
+          $pattern = "## \[$($env:VERSION)\].*?(?=## \[|\z)"
+          if ($changelog -match $pattern) {
+            $versionChangelog = $matches[0]
+            $versionChangelog = $versionChangelog -replace "## \[$($env:VERSION)\][^\r\n]*", ""
+            $versionChangelog = $versionChangelog.Trim()
+            $versionChangelog | Out-File -FilePath changelog_extract.md -Encoding utf8
+          } else {
+            "## Changes in v$($env:VERSION)`n`nSee CHANGELOG.md for details." | Out-File -FilePath changelog_extract.md -Encoding utf8
+          }
+        env:
+          VERSION: ${{ steps.get_version.outputs.VERSION }}
+        shell: powershell
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: WinDel Package Manager v${{ steps.get_version.outputs.VERSION }}
+          body_path: changelog_extract.md
+          draft: false
+          prerelease: false
+
+      - name: Upload WinDel Script
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./windel.bat
+          asset_name: windel-v${{ steps.get_version.outputs.VERSION }}.bat
+          asset_content_type: application/octet-stream
+
+      - name: Create Installer Package
+        run: |
+          mkdir WinDel-v${{ steps.get_version.outputs.VERSION }}
+          copy windel.bat "WinDel-v${{ steps.get_version.outputs.VERSION }}\windel.bat"
+          if exist README.md copy README.md "WinDel-v${{ steps.get_version.outputs.VERSION }}\README.md"
+          copy CHANGELOG.md "WinDel-v${{ steps.get_version.outputs.VERSION }}\CHANGELOG.md"
+          echo @echo off > "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          echo echo Installing WinDel Package Manager... >> "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          echo if not exist "%ProgramFiles%\WinDel" mkdir "%ProgramFiles%\WinDel" >> "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          echo copy windel.bat "%ProgramFiles%\WinDel\windel.bat" >> "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          echo echo WinDel installed to Program Files >> "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          echo pause >> "WinDel-v${{ steps.get_version.outputs.VERSION }}\install.bat"
+          powershell Compress-Archive -Path "WinDel-v${{ steps.get_version.outputs.VERSION }}" -DestinationPath "WinDel-v${{ steps.get_version.outputs.VERSION }}.zip"
+        shell: cmd
+
+      - name: Upload Release Package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./WinDel-v${{ steps.get_version.outputs.VERSION }}.zip
+          asset_name: WinDel-v${{ steps.get_version.outputs.VERSION }}.zip
+          asset_content_type: application/zip
