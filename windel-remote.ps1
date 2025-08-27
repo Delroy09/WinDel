@@ -1,5 +1,5 @@
 # WinDel Remote Execution - Run without installation
-# Usage: iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/yourusername/windel/main/windel-remote.ps1'))
+# Usage: iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Delroy09/WinDel/main/windel-remote.ps1'))
 
 Write-Host "🚀 WinDel Package Manager - Remote Execution" -ForegroundColor Cyan
 Write-Host "=============================================" -ForegroundColor Cyan

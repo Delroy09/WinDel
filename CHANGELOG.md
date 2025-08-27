@@ -19,6 +19,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bug fixes
 
+## [1.2.3] - 2025-08-26
+
+### Fixed
+
+- 🔧 **Update Installation Issues**: Removed `--silent` flag that was preventing actual package installations
+- 🔍 **Better Verification**: Added post-update verification to confirm packages were actually updated
+- 📊 **Enhanced Error Reporting**: Improved error codes and exit status handling for failed updates
+- 🛠️ **Debug Information**: Added detailed debug output to track WinGet commands
+
+### Added
+
+- 🔧 **Troubleshooting Mode**: New option 4 to diagnose WinGet configuration issues
+- ✅ **Update Verification**: Automatic post-update scan to verify successful installations
+- 📋 **Exit Code Analysis**: Detailed reporting of specific WinGet error codes
+
+### Changed
+
+- ⚡ **More Reliable Updates**: WinGet commands now use proper flags for actual installations
+- 🎯 **Better User Feedback**: Clear indication when updates succeed or fail
+
+## [1.2.2] - 2025-08-26
+
+### Fixed
+
+- 🐛 **Admin Console Display**: Fixed distorted Unicode characters in administrator mode
+- 📊 **Table Formatting**: Replaced Unicode box-drawing characters with ASCII for better compatibility
+- 🎨 **Progress Bars**: Simplified progress indicators for consistent display across all privilege levels
+- 🖥️ **Console Compatibility**: Enhanced Windows 10+ console support with ANSI escape sequences
+
+### Changed
+
+- 🔧 **Better Admin Support**: Improved visual consistency when running as administrator
+- 📋 **Table Layout**: More reliable table formatting using standard ASCII characters
+
 ## [1.2.1] - 2025-08-26
 
 ### Added
