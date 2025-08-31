@@ -1,44 +1,23 @@
 # WinDel Package Manager 🚀
 
-**Simple, Fast & Reliable Windows Package Update Manager**
+Simple Windows package update manager using WinGet.
 
-[![Latest Release](https://img.shields.io/github/v/release/Delroy09/WinDel?style=for-the-badge&logo=github)](https://github.com/Delroy09/WinDel/releases/latest)
-[![Downloads](https://img.shields.io/github/downloads/Delroy09/WinDel/total?style=for-the-badge&logo=github)](https://github.com/Delroy09/WinDel/releases)
-[![License](https://img.shields.io/github/license/Delroy09/WinDel?style=for-the-badge)](LICENSE)
+## 📥 Download
 
-WinDel is a lightweight Windows package manager that simplifies updating your installed applications using WinGet. Clean interface, reliable updates, works in both elevated and non-elevated states.
+[**Download windel.bat**](https://github.com/Delroy09/WinDel/releases/latest/download/windel.bat) and double-click to run.
 
-## ⚡ Quick Start
+## ✨ Features
 
-### Download & Run
-
-```cmd
-# Download the script
-curl -o windel.bat https://raw.githubusercontent.com/Delroy09/WinDel/main/windel.bat
-
-# Or using PowerShell
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Delroy09/WinDel/main/windel.bat" -OutFile "windel.bat"
-
-# Run it
-windel.bat
-```
-
-### Or Direct Download
-
-[Download windel.bat](https://github.com/Delroy09/WinDel/releases/latest/download/windel.bat) and double-click to run.
-
-## 🎯 Features
-
-- ✅ **Simple & Clean** - No complex installation, just download and run
+- ✅ **Simple & Clean** - Just download and run, no installation needed
 - ⚡ **Fast Updates** - Efficiently scans and updates packages using WinGet
 - 🎨 **User-Friendly** - Clear menu system with numbered options
-- 🔧 **Smart Detection** - Automatically finds and validates WinGet installation
 - 📊 **Interactive Selection** - Choose exactly which packages to update
-- 🛡️ **Works Everywhere** - Functions in both elevated and standard user modes
-- 🚀 **Seamless Flow** - Check updates and install them in one smooth workflow
-- 📱 **Zero Dependencies** - Only requires WinGet (auto-detected)
+- 🚀 **Seamless Flow** - Check updates and install them in one workflow
+- �️ **Works Everywhere** - Functions in both elevated and standard user modes
 
-## 🖥️ Interface
+## 🖥️ Screenshots
+
+### Main Menu
 
 ```
 ========================================
@@ -57,81 +36,43 @@ WinDel Package Manager v1.3
 Choice (default=1):
 ```
 
-## 🚀 Usage
+### Available Updates
 
-### Main Menu Options
+```
+Available Updates:
+====================================================
+1. Google Chrome (Google.Chrome 118.0.5993.118 -> 119.0.6045.105)
+2. Visual Studio Code (Microsoft.VisualStudioCode 1.84.2 -> 1.85.1)
+3. Discord (Discord.Discord 1.0.9013 -> 1.0.9015)
 
-1. **Check for updates** - Scans for available updates and offers installation options
-2. **Update all packages** - Updates everything with confirmation
-3. **Choose which to update** - Interactive selection with clean numbered list
-4. **Exit** - Clean exit
+Found 3 available updates
 
-### Update Flow
+Enter package numbers (e.g., 1 2 3) or 'all' for all packages:
+Selection: 1 3
+```
 
-- **Check updates** → View available updates → Choose to install all/some/none
-- **Select packages** → Enter numbers (e.g., `1 2 3`) or `all`
-- **Automatic installation** → Progress feedback with success/failure indicators
+### Update Progress
 
-## 🛡️ System Requirements
+```
+Processing selected updates...
+====================================================
+Updating Google Chrome...
+✓ Google Chrome updated successfully
 
-- Windows 10 (1809+) or Windows 11
-- WinGet (Microsoft App Installer) - auto-detected
-- Command Prompt or PowerShell
-- Internet connection for package updates
+Updating Discord...
+✓ Discord updated successfully
 
-## 🔧 How It Works
+====================================================
+Selected updates completed!
+```
 
-1. **WinGet Detection** - Verifies WinGet is installed and accessible
-2. **Package Scanning** - Uses `winget upgrade` to find available updates
-3. **Clean Filtering** - Removes unknown/problematic packages from display
-4. **Smart Updates** - Uses package IDs for reliable installation
-5. **Status Feedback** - Shows success (✓) or failure (✗) for each update
+## 🎯 How to Use
 
-## 📋 Troubleshooting
-
-### WinGet Not Found
-
-- Install from Microsoft Store: "App Installer"
-- Or download from: https://github.com/microsoft/winget-cli/releases
-
-### No Updates Showing
-
-- Run `winget upgrade` manually to verify WinGet is working
-- Check if you have any installed packages from WinGet sources
-
-### Permission Issues
-
-- Some packages may require elevation (WinGet will prompt automatically)
-- Run as Administrator for system-wide package updates
-
-## ✨ What's New in v1.3
-
-- 🔄 **Improved Update Flow** - Check updates → immediate install options
-- 🧹 **Clean Package Display** - Filtered unknown packages for better UX
-- ✅ **Better Feedback** - Success/failure indicators for each update
-- 🎯 **Enhanced Parsing** - More reliable package list processing
-- 🛡️ **Robust Error Handling** - Graceful handling of various scenarios
-
-## 📈 Changelog
-
-See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Make your improvements to `windel.bat`
-3. Test thoroughly in different environments
-4. Submit a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🙋‍♂️ Support
-
-- 📋 [Issues](https://github.com/Delroy09/WinDel/issues) - Bug reports and feature requests
-- 💬 [Discussions](https://github.com/Delroy09/WinDel/discussions) - Questions and community
+1. **Check for updates** - Shows available package updates
+2. **Update all** - Updates everything with confirmation
+3. **Choose updates** - Select specific packages by number
+4. **Exit** - Close the program
 
 ---
 
-**Simple tools for better Windows package management** ⚡
+**Download once, update everything** ⚡
