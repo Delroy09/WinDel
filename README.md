@@ -4,7 +4,7 @@ Simple Windows package update manager using WinGet.
 
 ## 📥 Download
 
-[**Download windel.bat**](https://github.com/Delroy09/WinDel/releases/latest/download/windel.bat) and double-click to run.
+Visit the [WinDel website](https://github.com/Delroy09/WinDel) and download **windel.bat**, then double-click to run.
 
 ## ✨ Features
 
