@@ -8,15 +8,53 @@ echo     WinDel Package Manager v1.3
 echo ========================================
 echo.
 
-REM Check for WinGet
-echo Checking for WinGet...
+REM Check for dependencies
+echo Checking for dependencies...
 where winget >nul 2>&1
 if %errorLevel% neq 0 (
-    echo WinGet not found. Please install WinGet and try again.
+    echo.
+    echo ========================================
+    echo    Dependencies Not Installed!
+    echo ========================================
+    echo.
+    echo WinDel requires package management dependencies to function.
+    echo.
+    echo Do you wish to install the required dependencies?
+    echo.
+    choice /c yn /d n /t 15 /m "Install dependencies? (Y/N) - Default: No"
+    if errorlevel 2 (
+        echo.
+        echo This program requires dependencies to run.
+        echo Please install the required dependencies and try again.
+        echo.
+        pause
+        exit /b 1
+    )
+    
+    echo.
+    echo Installing dependencies...
+    echo ====================================================
+    echo.
+    echo Opening Microsoft Store to install package manager...
+    
+    REM Try to open Microsoft Store to App Installer page
+    start ms-windows-store://pdp/?ProductId=9NBLGGH4NNS1
+    
+    echo.
+    echo Microsoft Store should open to install App Installer.
+    echo This includes the required package management tools.
+    echo.
+    echo Please:
+    echo 1. Install/Update App Installer from the Store
+    echo 2. Restart this program once installation completes
+    echo.
+    echo If the Store doesn't open, you can:
+    echo • Search "App Installer" in Microsoft Store manually
+    echo.
     pause
     exit /b 1
 )
-echo WinGet found.
+echo Dependencies found.
 echo.
 
 :MAIN_MENU
