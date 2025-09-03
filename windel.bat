@@ -4,7 +4,7 @@ title WinDel Package Manager
 
 echo.
 echo ========================================
-echo     WinDel Package Manager v1.3
+echo     WinDel Package Manager v1.3.2
 echo ========================================
 echo.
 
@@ -59,7 +59,7 @@ echo.
 
 :MAIN_MENU
 cls
-echo WinDel Package Manager v1.3
+echo WinDel Package Manager v1.3.2
 echo ====================================================
 echo.
 echo    1. Check for updates
